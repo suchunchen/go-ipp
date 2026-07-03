@@ -54,6 +54,12 @@ func (e *requestEncoder) encode(r *Request) error {
 		return err
 	}
 
+	if len(r.SubscriptionAttributes) > 0 {
+		if err := e.encodeAttribute(TagDelimiterSubscription, r.SubscriptionAttributes); err != nil {
+			return err
+		}
+	}
+
 	if len(r.JobAttributes) > 0 {
 		if err := e.encodeAttribute(TagDelimiterJob, r.JobAttributes); err != nil {
 			return err

@@ -13,9 +13,10 @@ type Request struct {
 	Operation int16
 	RequestId int32
 
-	OperationAttributes map[string]any
-	JobAttributes       map[string]any
-	PrinterAttributes   map[string]any
+	OperationAttributes    map[string]any
+	SubscriptionAttributes map[string]any
+	JobAttributes          map[string]any
+	PrinterAttributes      map[string]any
 
 	File     io.Reader
 	FileSize int
@@ -24,15 +25,16 @@ type Request struct {
 // NewRequest creates a new ipp request
 func NewRequest(op int16, reqID int32) *Request {
 	return &Request{
-		ProtocolVersionMajor: ProtocolVersionMajor,
-		ProtocolVersionMinor: ProtocolVersionMinor,
-		Operation:            op,
-		RequestId:            reqID,
-		OperationAttributes:  make(map[string]any),
-		JobAttributes:        make(map[string]any),
-		PrinterAttributes:    make(map[string]any),
-		File:                 nil,
-		FileSize:             -1,
+		ProtocolVersionMajor:   ProtocolVersionMajor,
+		ProtocolVersionMinor:   ProtocolVersionMinor,
+		Operation:              op,
+		RequestId:              reqID,
+		OperationAttributes:    make(map[string]any),
+		SubscriptionAttributes: make(map[string]any),
+		JobAttributes:          make(map[string]any),
+		PrinterAttributes:      make(map[string]any),
+		File:                   nil,
+		FileSize:               -1,
 	}
 }
 

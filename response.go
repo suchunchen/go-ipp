@@ -15,10 +15,11 @@ type Response struct {
 	StatusCode int16
 	RequestId  int32
 
-	OperationAttributes   Attributes
-	PrinterAttributes     []Attributes
-	JobAttributes         []Attributes
-	UnsupportedAttributes Attributes
+	OperationAttributes    Attributes
+	SubscriptionAttributes []Attributes
+	PrinterAttributes      []Attributes
+	JobAttributes          []Attributes
+	UnsupportedAttributes  Attributes
 }
 
 // CheckForErrors checks the status code and returns a error if it is not zero. it also returns the status message if provided by the server
@@ -42,14 +43,15 @@ func (r *Response) CheckForErrors() error {
 // NewResponse creates a new ipp response
 func NewResponse(statusCode int16, reqID int32) *Response {
 	return &Response{
-		ProtocolVersionMajor:  ProtocolVersionMajor,
-		ProtocolVersionMinor:  ProtocolVersionMinor,
-		StatusCode:            statusCode,
-		RequestId:             reqID,
-		OperationAttributes:   make(Attributes),
-		PrinterAttributes:     make([]Attributes, 0),
-		JobAttributes:         make([]Attributes, 0),
-		UnsupportedAttributes: make(Attributes),
+		ProtocolVersionMajor:   ProtocolVersionMajor,
+		ProtocolVersionMinor:   ProtocolVersionMinor,
+		StatusCode:             statusCode,
+		RequestId:              reqID,
+		OperationAttributes:    make(Attributes),
+		SubscriptionAttributes: make([]Attributes, 0),
+		PrinterAttributes:      make([]Attributes, 0),
+		JobAttributes:          make([]Attributes, 0),
+		UnsupportedAttributes:  make(Attributes),
 	}
 }
 
