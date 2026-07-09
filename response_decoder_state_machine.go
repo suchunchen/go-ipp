@@ -48,6 +48,7 @@ func (r *responseDecoderStateMachine) Decode(reader io.Reader, data io.Writer) (
 		SubscriptionAttributes: make([]Attributes, 0),
 		PrinterAttributes:      make([]Attributes, 0),
 		JobAttributes:          make([]Attributes, 0),
+		DocumentAttributes:     make([]Attributes, 0),
 		UnsupportedAttributes:  make(Attributes),
 	}
 
@@ -104,7 +105,7 @@ func (r *responseDecoderStateMachine) Decode(reader io.Reader, data io.Writer) (
 			case TagDelimiterEnd:
 				r.state = responseDecoderStateData
 				continue
-			case TagDelimiterOperation, TagDelimiterSubscription, TagDelimiterPrinter, TagDelimiterJob, TagDelimiterUnsupported:
+			case TagDelimiterOperation, TagDelimiterSubscription, TagDelimiterPrinter, TagDelimiterJob, TagDelimiterDocument, TagDelimiterUnsupported:
 				r.currentAttributes = make(Attributes)
 			default:
 				return nil, fmt.Errorf("unsupported attribute group: 0x%02x", r.currentAttributeGroupTag)
@@ -166,5 +167,7 @@ func appendAttributeToResponse(resp *Response, tag int8, attr Attributes) {
 		resp.PrinterAttributes = append(resp.PrinterAttributes, attr)
 	case TagDelimiterJob:
 		resp.JobAttributes = append(resp.JobAttributes, attr)
+	case TagDelimiterDocument:
+		resp.DocumentAttributes = append(resp.DocumentAttributes, attr)
 	}
 }

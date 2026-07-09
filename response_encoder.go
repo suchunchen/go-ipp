@@ -78,6 +78,14 @@ func (e *responseEncoder) encode(r *Response) error {
 		}
 	}
 
+	if len(r.DocumentAttributes) > 0 {
+		for _, attribute := range r.DocumentAttributes {
+			if err := e.encodeAttributes(TagDelimiterDocument, attribute); err != nil {
+				return err
+			}
+		}
+	}
+
 	return binary.Write(e.w, binary.BigEndian, TagDelimiterEnd)
 }
 

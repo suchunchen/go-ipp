@@ -19,6 +19,7 @@ type Response struct {
 	SubscriptionAttributes []Attributes
 	PrinterAttributes      []Attributes
 	JobAttributes          []Attributes
+	DocumentAttributes     []Attributes
 	UnsupportedAttributes  Attributes
 }
 
@@ -51,6 +52,7 @@ func NewResponse(statusCode int16, reqID int32) *Response {
 		SubscriptionAttributes: make([]Attributes, 0),
 		PrinterAttributes:      make([]Attributes, 0),
 		JobAttributes:          make([]Attributes, 0),
+		DocumentAttributes:     make([]Attributes, 0),
 		UnsupportedAttributes:  make(Attributes),
 	}
 }

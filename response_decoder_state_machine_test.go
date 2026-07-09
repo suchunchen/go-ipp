@@ -98,6 +98,11 @@ var unsupportedResponse = `
 70 2f 70 72 69 6e 74 03 01 02 03
 `
 
+var documentAttributesResponse = `
+02 00 00 00 00 00 00 01 09 23 00 0e 64 6f 63 75 6d
+65 6e 74 2d 73 74 61 74 65 00 04 00 00 00 03 03
+`
+
 func hex2b(hx string) []byte {
 	hx = strings.ReplaceAll(hx, " ", "")
 	hx = strings.ReplaceAll(hx, "\n", "")
@@ -155,4 +160,20 @@ func TestResponseDecode(t *testing.T) {
 	} else {
 		t.Errorf("Expected Data, got nil")
 	}
+}
+
+func TestResponseDecode_DocumentAttributes(t *testing.T) {
+	reader := hex2reader(documentAttributesResponse)
+
+	stateMachine := newResponseStateMachine()
+	response, err := stateMachine.Decode(reader, nil)
+
+	assert.NoError(t, err)
+	assert.Len(t, response.DocumentAttributes, 1)
+
+	documentAttributes := response.DocumentAttributes[0]
+	assert.Len(t, documentAttributes, 1)
+
+	documentState := documentAttributes[AttributeDocumentState][0]
+	assert.EqualValues(t, DocumentStatePending, documentState.Value)
 }
