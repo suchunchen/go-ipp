@@ -47,6 +47,7 @@ func (r *requestDecoderStateMachine) Decode(reader io.Reader, data io.Writer) (*
 		OperationAttributes: make(map[string]any),
 		PrinterAttributes:   make(map[string]any),
 		JobAttributes:       make(map[string]any),
+		DocumentAttributes:  make(map[string]any),
 	}
 
 	attributeDecoder := NewAttributeDecoder(reader)
@@ -102,7 +103,7 @@ func (r *requestDecoderStateMachine) Decode(reader io.Reader, data io.Writer) (*
 			case TagDelimiterEnd:
 				r.state = requestDecoderStateData
 				continue
-			case TagDelimiterOperation, TagDelimiterPrinter, TagDelimiterJob:
+			case TagDelimiterOperation, TagDelimiterPrinter, TagDelimiterJob, TagDelimiterDocument:
 				r.currentAttributes = make(map[string]any)
 			default:
 				return nil, fmt.Errorf("unsupported attribute group: 0x%02x", r.currentAttributeGroupTag)
@@ -158,5 +159,7 @@ func appendAttributeToRequest(req *Request, tag int8, attributes map[string]any)
 		req.PrinterAttributes = attributes
 	case TagDelimiterJob:
 		req.JobAttributes = attributes
+	case TagDelimiterDocument:
+		req.DocumentAttributes = attributes
 	}
 }

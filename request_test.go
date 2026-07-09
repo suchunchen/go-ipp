@@ -58,3 +58,17 @@ func TestRequestDecoder_Decode(t *testing.T) {
 		assert.Equal(t, &c.Request, request, "decoded request is not correct")
 	}
 }
+
+func TestRequest_EncodeDecode_DocumentAttributes(t *testing.T) {
+	req := NewRequest(OperationSetDocumentAttributes, 77)
+	req.OperationAttributes[AttributePrinterURI] = "ipp://localhost/printers/test"
+	req.DocumentAttributes[AttributeDocumentState] = int(DocumentStateProcessing)
+
+	data, err := req.Encode()
+	assert.NoError(t, err)
+
+	decoded, err := NewRequestDecoder(bytes.NewReader(data)).Decode(nil)
+	assert.NoError(t, err)
+
+	assert.Equal(t, int(DocumentStateProcessing), decoded.DocumentAttributes[AttributeDocumentState])
+}

@@ -17,6 +17,7 @@ type Request struct {
 	SubscriptionAttributes map[string]any
 	JobAttributes          map[string]any
 	PrinterAttributes      map[string]any
+	DocumentAttributes     map[string]any
 
 	File     io.Reader
 	FileSize int
@@ -33,6 +34,7 @@ func NewRequest(op int16, reqID int32) *Request {
 		SubscriptionAttributes: make(map[string]any),
 		JobAttributes:          make(map[string]any),
 		PrinterAttributes:      make(map[string]any),
+		DocumentAttributes:     make(map[string]any),
 		File:                   nil,
 		FileSize:               -1,
 	}
