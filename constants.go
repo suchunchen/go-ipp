@@ -357,6 +357,9 @@ const (
 	AttributeOutputOrder                        = "outputorder"
 	AttributeJobStateReasons                    = "job-state-reasons"
 	AttributeJobStateMessage                    = "job-state-message"
+	AttributeOutputDeviceJobState               = "output-device-job-state"
+	AttributeOutputDeviceJobStateReasons        = "output-device-job-state-reasons"
+	AttributeOutputDeviceJobStateMessage        = "output-device-job-state-message"
 	AttributeJobPrinterStateReasons             = "job-printer-state-reasons"
 	AttributeJobPrinterStateMessage             = "job-printer-state-message"
 	AttributeJobImpressionsCompleted            = "job-impressions-completed"
@@ -471,6 +474,9 @@ var AttributeTagMapping = map[string]int8{
 	AttributeOutputOrder:                        TagName,
 	AttributeJobStateReasons:                    TagString,
 	AttributeJobStateMessage:                    TagString,
+	AttributeOutputDeviceJobState:               TagEnum,
+	AttributeOutputDeviceJobStateReasons:        TagString,
+	AttributeOutputDeviceJobStateMessage:        TagString,
 	AttributeJobPrinterStateReasons:             TagString,
 	AttributeJobPrinterStateMessage:             TagString,
 	AttributeJobImpressionsCompleted:            TagInteger,
